@@ -1,0 +1,304 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "I HAVE TAKEN MY OWN SAMPLE TAKE ACCORDING TO THE MENTIONED FIELDS\n",
+    "I HAVE USED ONLY INDIA AND USA AS 2 COUNTRY TABLES AS ONLY CUSTOMERS FROM HERE I HAVE CONSIDERED\n",
+    "ONLY INDIA AND USA\n",
+    "OTHER FIELD VALUES ARE RANDOM AND REPEATED EXCEPT PRIMARY KEYS WHICH IS THE CUSTOMER_ID\n",
+    "USED TRIGGER\n",
+    "AND I AM MENTIONING THE DATAFILE ALSO FOR YOUR REFERENCE"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True\n"
+     ]
+    }
+   ],
+   "source": [
+    "import mysql.connector as connection\n",
+    "try:\n",
+    "    mydb = connection.connect(host=\"localhost\", user=\"root\", passwd=\"Zend@2020\",use_pure=True)\n",
+    "    # check if the connection is established\n",
+    "    print(mydb.is_connected())\n",
+    "    mydb.close()\n",
+    "except Exception as e:\n",
+    "    print(str(e))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import mysql.connector as connection\n",
+    "import pandas as pd\n",
+    "import csv"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True\n",
+      "Database created\n"
+     ]
+    }
+   ],
+   "source": [
+    "import mysql.connector as connection\n",
+    "\n",
+    "try:\n",
+    "    mydb = connection.connect(host=\"localhost\", user=\"root\", passwd=\"Zend@2020\",use_pure=True)\n",
+    "    \n",
+    "    print(mydb.is_connected())\n",
+    "\n",
+    "    query = \"create database hospital\"\n",
+    "    cursor = mydb.cursor()\n",
+    "    cursor.execute(query)\n",
+    "    print(\"Database created\")\n",
+    "    mydb.close()\n",
+    "except Exception as e:\n",
+    "    mydb.close()\n",
+    "    print(str(e))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True\n",
+      "Table created\n"
+     ]
+    }
+   ],
+   "source": [
+    "import mysql.connector as connection\n",
+    "\n",
+    "try:\n",
+    "    mydb = connection.connect(host=\"localhost\",database='hospital', user=\"root\", passwd=\"Zend@2020\",use_pure=True)\n",
+    "    \n",
+    "    print(mydb.is_connected())\n",
+    "\n",
+    "    query = \"create table customer(customer_name varchar(20),customer_id varchar(20) primary key,customer_open_date date,last_consulted_date date,vaccination_type char(20),doctor_consulted char(20),state char(20),country char(20),post_code int(20),dob date,active_customer char(20));\"\n",
+    "    cursor = mydb.cursor() \n",
+    "    cursor.execute(query)\n",
+    "    print(\"Table created\")\n",
+    "    mydb.close()\n",
+    "except Exception as e:\n",
+    "    mydb.close()\n",
+    "    print(str(e))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True\n",
+      "Table created\n"
+     ]
+    }
+   ],
+   "source": [
+    "import mysql.connector as connection\n",
+    "\n",
+    "try:\n",
+    "    mydb = connection.connect(host=\"localhost\",database='hospital', user=\"root\", passwd=\"Zend@2020\",use_pure=True)\n",
+    "   \n",
+    "    print(mydb.is_connected())\n",
+    "\n",
+    "    query = \"create table customer_india(sno int(20) auto_increment primary key,customer_name varchar(20),customer_id varchar(20),customer_open_date date,last_consulted_date date,vaccination_type char(20),doctor_consulted char(20),state char(20),country char(20),post_code int(20),dob date,active_customer char(20),foreign key(customer_id) references customer(customer_id));\"\n",
+    "    cursor = mydb.cursor() \n",
+    "    cursor.execute(query)\n",
+    "    print(\"Table created\")\n",
+    "    mydb.close()\n",
+    "except Exception as e:\n",
+    "    mydb.close()\n",
+    "    print(str(e))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "True\n",
+      "Table created\n"
+     ]
+    }
+   ],
+   "source": [
+    "import mysql.connector as connection\n",
+    "\n",
+    "try:\n",
+    "    mydb = connection.connect(host=\"localhost\",database='hospital', user=\"root\", passwd=\"Zend@2020\",use_pure=True)\n",
+    "   \n",
+    "    print(mydb.is_connected())\n",
+    "\n",
+    "    query = \"create table customer_usa(sno int(20) auto_increment primary key,customer_name varchar(20),customer_id varchar(20),customer_open_date date,last_consulted_date date,vaccination_type char(20),doctor_consulted char(20),state char(20),country char(20),post_code int(20),dob date,active_customer char(20),foreign key(customer_id) references customer(customer_id));\"\n",
+    "    cursor = mydb.cursor() \n",
+    "    cursor.execute(query)\n",
+    "    print(\"Table created\")\n",
+    "    mydb.close()\n",
+    "except Exception as e:\n",
+    "    mydb.close()\n",
+    "    print(str(e))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# After table creation\n",
+    "we create trigger to add values into different country tables when are values inserted into customer table having country=\"IND\" and \"USA\"\n",
+    "\n",
+    "create trigger customer_trigger\n",
+    "after insert \n",
+    "on customer for each row\n",
+    "begin\n",
+    "IF NEW.country = \"IND\" THEN\n",
+    " insert into customer_india(customer_name,customer_id,customer_open_date,last_consulted_date,vaccination_type,doctor_consulted,state,country,post_code,dob,active_customer)\n",
+    " values(NEW.customer_name,NEW.customer_id,NEW.customer_open_date,NEW.last_consulted_date,NEW.vaccination_type,NEW.doctor_consulted,NEW.state,NEW.country,NEW.post_code,NEW.dob,NEW.active_customer);\n",
+    "ELSEIF NEW.country = \"USA\" THEN\n",
+    " insert into customer_usa(customer_name,customer_id,customer_open_date,last_consulted_date,vaccination_type,doctor_consulted,state,country,post_code,dob,active_customer)\n",
+    " values(NEW.customer_name,NEW.customer_id,NEW.customer_open_date,NEW.last_consulted_date,NEW.vaccination_type,NEW.doctor_consulted,NEW.state,NEW.country,NEW.post_code,NEW.dob,NEW.active_customer);\n",
+    "END IF;\n",
+    "end$$\n",
+    "\n",
+    "******I created this trigger in the backend in sql cmd prompt*****\n",
+    "so when values are inserted into the customer table according to which country they get inserted into the country table as well.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "##this is the trigger used \n",
+    "\"\"\"\n",
+    "create trigger customer_trigger\n",
+    "after insert \n",
+    "on customer for each row\n",
+    "begin\n",
+    "IF NEW.country = \"IND\" THEN\n",
+    " insert into customer_india(customer_name,customer_id,customer_open_date,last_consulted_date,vaccination_type,doctor_consulted,state,country,post_code,dob,active_customer)\n",
+    " values(NEW.customer_name,NEW.customer_id,NEW.customer_open_date,NEW.last_consulted_date,NEW.vaccination_type,NEW.doctor_consulted,NEW.state,NEW.country,NEW.post_code,NEW.dob,NEW.active_customer);\n",
+    "ELSEIF NEW.country = \"USA\" THEN\n",
+    " insert into customer_usa(customer_name,customer_id,customer_open_date,last_consulted_date,vaccination_type,doctor_consulted,state,country,post_code,dob,active_customer)\n",
+    " values(NEW.customer_name,NEW.customer_id,NEW.customer_open_date,NEW.last_consulted_date,NEW.vaccination_type,NEW.doctor_consulted,NEW.state,NEW.country,NEW.post_code,NEW.dob,NEW.active_customer);\n",
+    "END IF;\n",
+    "end$$\n",
+    "\"\"\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "values are inserted\n"
+     ]
+    }
+   ],
+   "source": [
+    "mydb = connection.connect(host=\"localhost\",database='hospital', user=\"root\", passwd=\"Zend@2020\",use_pure=True)\n",
+    "cursor = mydb.cursor()\n",
+    "with open(\"hospital_customer1.txt\",'r') as f:\n",
+    "    cli=csv.reader(f,delimiter='\\n')\n",
+    "    for line in enumerate(cli):\n",
+    "        for i in line[1]:\n",
+    "            cursor = mydb.cursor()\n",
+    "            cursor.execute('insert into customer values ({values})'.format(values=(i)))\n",
+    "print(\"values are inserted\")\n",
+    "mydb.commit()\n",
+    "cursor.close()\n",
+    "mydb.close()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "##finally we can use select statments to see the output in cmd console."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#select * from customer;\n",
+    "#select * from customer_india;\n",
+    "#select * from customer_usa;\n",
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
